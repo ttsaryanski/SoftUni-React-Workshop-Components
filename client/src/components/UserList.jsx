@@ -20,6 +20,7 @@ export default function UserList() {
     const [showCreate, setShowCreate] = useState(false);
     const [showInfoById, setShowInfoById] = useState(null);
     const [showDelById, setShowDelById] = useState(null);
+    const [showEditById, setShowEditById] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,12 +44,39 @@ export default function UserList() {
 
     const closeCreateView = () => {
         setShowCreate(false);
+        setShowEditById(null);
     };
 
     const createUser = async (e) => {
         e.preventDefault();
-        console.log("create user");
+
+        const formData = new FormData(e.target.parentElement.parentElement);
+        const userData = Object.fromEntries(formData);
+
+        const newUser = await dataService.createNew(userData);
+        setUsers((state) => [...state, newUser]);
+
         setShowCreate(false);
+    };
+
+    const showEdit = (userId) => {
+        setShowEditById(userId);
+    };
+
+    const editUser = async (e) => {
+        e.preventDefault();
+
+        const userId = showEditById;
+        const formData = new FormData(e.target.parentElement.parentElement);
+        const userData = Object.fromEntries(formData);
+
+        const updatedUser = await dataService.editById(userId, userData);
+
+        setUsers((state) =>
+            state.map((user) => (user._id === userId ? updatedUser : user))
+        );
+
+        setShowEditById(null);
     };
 
     const showDetails = (userId) => {
@@ -67,8 +95,19 @@ export default function UserList() {
         setShowDelById(null);
     };
 
-    const showEdit = (userId) => {
-        setShowCreate(true);
+    const deleteUser = async () => {
+        try {
+            await dataService.delItemById(showDelById);
+
+            setUsers((state) =>
+                state.filter((user) => user._id !== showDelById)
+            );
+
+            setShowDelById(null);
+        } catch (err) {
+            console.log("Error fetching data:", err.message);
+            setIsError(true);
+        }
     };
 
     return (
@@ -77,12 +116,21 @@ export default function UserList() {
                 <CreateView onClose={closeCreateView} onSave={createUser} />
             )}
 
+            {showEditById && (
+                <CreateView
+                    userId={showEditById}
+                    onClose={closeCreateView}
+                    onSave={createUser}
+                    onEdit={editUser}
+                />
+            )}
+
             {showInfoById && (
                 <UserDetails userId={showInfoById} onClose={closeShowInfo} />
             )}
 
             {showDelById && (
-                <ShowDeleteUser userId={showDelById} onClose={closeDelete} />
+                <ShowDeleteUser onDelete={deleteUser} onClose={closeDelete} />
             )}
 
             <Search />

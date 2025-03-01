@@ -1,11 +1,34 @@
-export default function CreateView({ onClose, onSave }) {
+import { useEffect, useState } from "react";
+import { dataService } from "../services/dataService";
+
+export default function CreateView({ userId, onClose, onSave, onEdit }) {
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        if (!userId) {
+            return;
+        }
+
+        const fetchData = async () => {
+            try {
+                const result = await dataService.getById(userId);
+
+                setUser(result);
+            } catch (err) {
+                console.log("Error fetching data:", err.message);
+            }
+        };
+
+        fetchData();
+    }, [userId]);
+
     return (
         <div className="overlay">
             <div className="backdrop" onClick={onClose}></div>
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
-                        <h2>Edit User/Add User</h2>
+                        <h2>{userId ? "Edit" : "Add"} User</h2>
                         <button className="btn close" onClick={onClose}>
                             <svg
                                 aria-hidden="true"
@@ -36,6 +59,7 @@ export default function CreateView({ onClose, onSave }) {
                                         id="firstName"
                                         name="firstName"
                                         type="text"
+                                        defaultValue={user.firstName}
                                     />
                                 </div>
                             </div>
@@ -49,6 +73,7 @@ export default function CreateView({ onClose, onSave }) {
                                         id="lastName"
                                         name="lastName"
                                         type="text"
+                                        defaultValue={user.lastName}
                                     />
                                 </div>
                             </div>
@@ -65,6 +90,7 @@ export default function CreateView({ onClose, onSave }) {
                                         id="email"
                                         name="email"
                                         type="text"
+                                        defaultValue={user.email}
                                     />
                                 </div>
                             </div>
@@ -80,6 +106,7 @@ export default function CreateView({ onClose, onSave }) {
                                         id="phoneNumber"
                                         name="phoneNumber"
                                         type="text"
+                                        defaultValue={user.phoneNumber}
                                     />
                                 </div>
                             </div>
@@ -95,6 +122,7 @@ export default function CreateView({ onClose, onSave }) {
                                     id="imageUrl"
                                     name="imageUrl"
                                     type="text"
+                                    defaultValue={user.imageUrl}
                                 />
                             </div>
                         </div>
@@ -110,6 +138,7 @@ export default function CreateView({ onClose, onSave }) {
                                         id="country"
                                         name="country"
                                         type="text"
+                                        defaultValue={user.address?.country}
                                     />
                                 </div>
                             </div>
@@ -119,7 +148,12 @@ export default function CreateView({ onClose, onSave }) {
                                     <span>
                                         <i className="fa-solid fa-city"></i>
                                     </span>
-                                    <input id="city" name="city" type="text" />
+                                    <input
+                                        id="city"
+                                        name="city"
+                                        type="text"
+                                        defaultValue={user.address?.city}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -135,6 +169,7 @@ export default function CreateView({ onClose, onSave }) {
                                         id="street"
                                         name="street"
                                         type="text"
+                                        defaultValue={user.address?.street}
                                     />
                                 </div>
                             </div>
@@ -150,19 +185,34 @@ export default function CreateView({ onClose, onSave }) {
                                         id="streetNumber"
                                         name="streetNumber"
                                         type="text"
+                                        defaultValue={
+                                            user.address?.streetNumber
+                                        }
                                     />
                                 </div>
                             </div>
                         </div>
                         <div id="form-actions">
-                            <button
-                                id="action-save"
-                                className="btn"
-                                type="submit"
-                                onClick={onSave}
-                            >
-                                Save
-                            </button>
+                            {userId ? (
+                                <button
+                                    id="action-save"
+                                    className="btn"
+                                    type="submit"
+                                    onClick={onEdit}
+                                >
+                                    Edit
+                                </button>
+                            ) : (
+                                <button
+                                    id="action-save"
+                                    className="btn"
+                                    type="submit"
+                                    onClick={onSave}
+                                >
+                                    Save
+                                </button>
+                            )}
+
                             <button
                                 id="action-cancel"
                                 className="btn"

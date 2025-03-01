@@ -54,11 +54,10 @@ export default function UserDetails({ userId, onClose }) {
                         </div>
                         <div className="user-details">
                             <p>
-                                User Id:
-                                <strong>{user._id}</strong>
+                                User Id: <strong>{user._id}</strong>
                             </p>
                             <p>
-                                Full Name:
+                                Full Name:{" "}
                                 <strong>
                                     {user.firstName} {user.lastName}
                                 </strong>
@@ -67,27 +66,26 @@ export default function UserDetails({ userId, onClose }) {
                                 Email: <strong>{user.email}</strong>
                             </p>
                             <p>
-                                Phone Number:
+                                Phone Number:{" "}
                                 <strong>{user.phoneNumber}</strong>
                             </p>
                             <p>
-                                Address:
+                                Address:{" "}
                                 <strong>
-                                    {user.address?.country}
-                                    {user.address?.city}
-                                    {user.address?.street}
+                                    {user.address?.country} {user.address?.city}{" "}
+                                    {user.address?.street}{" "}
                                     {user.address?.streetNumber}
                                 </strong>
                             </p>
 
                             <p>
-                                Created on:
+                                Created on:{" "}
                                 <strong>
                                     {fromIsoToString(user.createdAt)}
                                 </strong>
                             </p>
                             <p>
-                                Modified on:
+                                Modified on:{" "}
                                 <strong>
                                     {fromIsoToString(user.updatedAt)}
                                 </strong>

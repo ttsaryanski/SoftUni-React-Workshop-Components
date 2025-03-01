@@ -23,11 +23,12 @@ router.get("/", async (req, res) => {
 
 //router.post("/", authMiddleware, async (req, res) => {
 router.post("/", async (req, res) => {
-    const userId = await req.cookies?.auth?.user?._id;
+    //const userId = await req.cookies?.auth?.user?._id;
     const data = req.body;
 
     try {
-        const item = await itemService.create(data, userId);
+        //const item = await itemService.create(data, userId);
+        const item = await itemService.create(data);
 
         res.status(201).json(item).end();
     } catch (error) {

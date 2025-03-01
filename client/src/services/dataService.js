@@ -12,16 +12,20 @@ async function getAll() {
     return await api.get(endPoints.getAll);
 }
 
-// async function createNew(data) {
-//     return await api.post(endPoints.createNew, data);
-// }
+async function createNew(data) {
+    const postData = transformUserData(data);
+
+    return await api.post(endPoints.getAll, postData);
+}
 
 async function getById(id) {
     return await api.get(endPoints.getAll + `/${id}`);
 }
 
-async function editItem(id, data) {
-    return await api.put(endPoints.getAll + `/${id}`, data);
+async function editById(id, data) {
+    const postData = transformUserData(data);
+
+    return await api.put(endPoints.getAll + `/${id}`, postData);
 }
 
 async function delItemById(id) {
@@ -38,10 +42,21 @@ async function delItemById(id) {
 
 export const dataService = {
     getAll,
-    // createNew,
+    createNew,
     getById,
-    editItem,
+    editById,
     delItemById,
     // searchItem,
     // getMyCar
 };
+
+function transformUserData(userData) {
+    const { country, city, street, streetNumber, ...transformedData } =
+        userData;
+
+    transformedData.address = { country, city, street, streetNumber };
+    transformedData.createdAt = new Date().toISOString();
+    transformedData.updatedAt = new Date().toISOString();
+
+    return transformedData;
+}

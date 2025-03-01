@@ -1,21 +1,4 @@
-import { useEffect, useState } from "react";
-import { dataService } from "../services/dataService";
-
-export default function ShowDeleteUser({ userId, onClose }) {
-    const [user, setUser] = useState({});
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await dataService.delItemById(userId);
-            } catch (err) {
-                console.log("Error fetching data:", err.message);
-            }
-        };
-
-        fetchData();
-    }, [userId]);
-
+export default function ShowDeleteUser({ onDelete, onClose }) {
     return (
         <div className="overlay">
             <div className="backdrop" onClick={onClose}></div>
@@ -47,6 +30,7 @@ export default function ShowDeleteUser({ userId, onClose }) {
                                 id="action-save"
                                 className="btn"
                                 type="submit"
+                                onClick={onDelete}
                             >
                                 Delete
                             </button>
