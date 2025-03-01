@@ -8,6 +8,7 @@ export default function UserItem({
     email,
     phoneNumber,
     createdAt,
+    onInfo,
 }) {
     return (
         <tr>
@@ -59,7 +60,11 @@ export default function UserItem({
                         ></path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button
+                    className="btn info-btn"
+                    title="Info"
+                    onClick={() => onInfo(_id)}
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"

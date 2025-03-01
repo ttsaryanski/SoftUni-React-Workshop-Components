@@ -16,9 +16,9 @@ async function getAll() {
 //     return await api.post(endPoints.createNew, data);
 // }
 
-// async function getDetails(id) {
-//     return await api.get(endPoints.apiById + id);
-// }
+async function getById(id) {
+    return await api.get(endPoints.getAll + `/${id}`);
+}
 
 async function editItem(id, data) {
     return await api.put(endPoints.getAll + `/${id}`, data);
@@ -39,7 +39,7 @@ async function editItem(id, data) {
 export const dataService = {
     getAll,
     // createNew,
-    // getDetails,
+    getById,
     editItem,
     // delItem,
     // searchItem,

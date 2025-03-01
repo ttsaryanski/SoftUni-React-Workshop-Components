@@ -1,7 +1,8 @@
 import "./App.css";
+
 import Header from "./components/Header";
+import UserList from "./components/UserList";
 import Footer from "./components/Footer";
-import Main from "./components/Main";
 
 function App() {
     return (
@@ -9,7 +10,7 @@ function App() {
             <Header />
 
             <main className="main">
-                <Main />
+                <UserList />
             </main>
 
             <Footer />

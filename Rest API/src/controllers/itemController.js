@@ -113,23 +113,23 @@ router.post("/", async (req, res) => {
 //     }
 // });
 
-// router.get("/:itemId", async (req, res) => {
-//     const itemId = req.params.itemId;
+router.get("/:itemId", async (req, res) => {
+    const itemId = req.params.itemId;
 
-//     try {
-//         const item = await itemService.getById(itemId);
+    try {
+        const item = await itemService.getById(itemId);
 
-//         if (item !== null) {
-//             res.status(200).json(item).end();
-//         } else {
-//             res.status(404)
-//                 .json({ message: "There is no item with this id." })
-//                 .end();
-//         }
-//     } catch (error) {
-//         res.status(500).json({ message: createErrorMsg(error) });
-//     }
-// });
+        if (item !== null) {
+            res.status(200).json(item).end();
+        } else {
+            res.status(404)
+                .json({ message: "There is no item with this id." })
+                .end();
+        }
+    } catch (error) {
+        res.status(500).json({ message: createErrorMsg(error) });
+    }
+});
 
 // router.delete("/:itemId", async (req, res) => {
 //     const itemId = req.params.itemId;
