@@ -9,6 +9,8 @@ export default function UserItem({
     phoneNumber,
     createdAt,
     onInfo,
+    onDel,
+    onEdit,
 }) {
     return (
         <tr>
@@ -26,7 +28,11 @@ export default function UserItem({
             <td>{fromIsoToString(createdAt)}</td>
 
             <td className="actions">
-                <button className="btn edit-btn" title="Edit">
+                <button
+                    className="btn edit-btn"
+                    title="Edit"
+                    onClick={() => onEdit(_id)}
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"
@@ -43,7 +49,11 @@ export default function UserItem({
                         ></path>
                     </svg>
                 </button>
-                <button className="btn delete-btn" title="Delete">
+                <button
+                    className="btn delete-btn"
+                    title="Delete"
+                    onClick={() => onDel(_id)}
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"

@@ -11,6 +11,7 @@ import NotSearchingResults from "./NotSearchingResult";
 import FetchError from "./FetchError";
 import CreateView from "./CreateView";
 import UserDetails from "./UserDetails";
+import ShowDeleteUser from "./UserDelete";
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
@@ -18,6 +19,7 @@ export default function UserList() {
     const [isError, setIsError] = useState(false);
     const [showCreate, setShowCreate] = useState(false);
     const [showInfoById, setShowInfoById] = useState(null);
+    const [showDelById, setShowDelById] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -57,6 +59,18 @@ export default function UserList() {
         setShowInfoById(null);
     };
 
+    const showDelete = (userId) => {
+        setShowDelById(userId);
+    };
+
+    const closeDelete = () => {
+        setShowDelById(null);
+    };
+
+    const showEdit = (userId) => {
+        setShowCreate(true);
+    };
+
     return (
         <section className="card users-container">
             {showCreate && (
@@ -65,6 +79,10 @@ export default function UserList() {
 
             {showInfoById && (
                 <UserDetails userId={showInfoById} onClose={closeShowInfo} />
+            )}
+
+            {showDelById && (
+                <ShowDeleteUser userId={showDelById} onClose={closeDelete} />
             )}
 
             <Search />
@@ -181,6 +199,8 @@ export default function UserList() {
                             <UserItem
                                 key={user._id}
                                 onInfo={showDetails}
+                                onEdit={showEdit}
+                                onDel={showDelete}
                                 {...user}
                             />
                         ))}

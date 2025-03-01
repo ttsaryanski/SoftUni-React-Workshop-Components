@@ -24,9 +24,9 @@ async function editItem(id, data) {
     return await api.put(endPoints.getAll + `/${id}`, data);
 }
 
-// async function delItem(id) {
-//     return await api.del(endPoints.apiById + id);
-// }
+async function delItemById(id) {
+    return await api.del(endPoints.getAll + `/${id}`);
+}
 
 // async function searchItem(query) {
 //     return await api.get(endPoints.search(query));
@@ -41,7 +41,7 @@ export const dataService = {
     // createNew,
     getById,
     editItem,
-    // delItem,
+    delItemById,
     // searchItem,
     // getMyCar
 };

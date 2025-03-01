@@ -131,17 +131,17 @@ router.get("/:itemId", async (req, res) => {
     }
 });
 
-// router.delete("/:itemId", async (req, res) => {
-//     const itemId = req.params.itemId;
+router.delete("/:itemId", async (req, res) => {
+    const itemId = req.params.itemId;
 
-//     try {
-//         await itemService.remove(itemId);
+    try {
+        await itemService.remove(itemId);
 
-//         res.status(204).end();
-//     } catch (error) {
-//         res.status(500).json({ message: createErrorMsg(error) });
-//     }
-// });
+        res.status(204).end();
+    } catch (error) {
+        res.status(500).json({ message: createErrorMsg(error) });
+    }
+});
 
 router.put("/:itemId", async (req, res) => {
     const itemId = req.params.itemId;
